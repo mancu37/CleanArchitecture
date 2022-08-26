@@ -1,0 +1,1 @@
+En este folder van las cosas que podemos compartir en otros proyectos como ser las entidades, enumeradores, exceptions, especificaciones, validaciones etc.

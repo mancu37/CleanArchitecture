@@ -1,0 +1,5 @@
+Aca van:
+	- Controladores
+	- Vistas (Presenters)
+	- View Models
+	- Gateways (Repositorios porque nos sirven como un enlace a los datos)
