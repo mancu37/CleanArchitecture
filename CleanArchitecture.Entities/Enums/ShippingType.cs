@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Entities.Enums
 {
-    public enum TipoDescuento
+    public enum ShippingType
     {
-        Plano, Porcentaje
+        Air, Ground, Sea, Rail
     }
 }

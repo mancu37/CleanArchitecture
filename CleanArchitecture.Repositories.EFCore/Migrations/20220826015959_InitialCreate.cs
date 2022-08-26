@@ -10,7 +10,7 @@ namespace CleanArchitecture.Repositories.EFCore.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Clientes",
+                name: "Customers",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", fixedLength: true, maxLength: 5, nullable: false)
@@ -19,11 +19,11 @@ namespace CleanArchitecture.Repositories.EFCore.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Clientes", x => x.Id);
+                    table.PrimaryKey("PK_Customers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Productos",
+                name: "Products",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -32,61 +32,61 @@ namespace CleanArchitecture.Repositories.EFCore.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Productos", x => x.Id);
+                    table.PrimaryKey("PK_Products", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Ordenes",
+                name: "Orders",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ClienteId = table.Column<int>(type: "int", fixedLength: true, maxLength: 5, nullable: false),
-                    Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Direccion = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
-                    Ciudad = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Pais = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CodigoPostal = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    CustomerId = table.Column<int>(type: "int", fixedLength: true, maxLength: 5, nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
+                    City = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Ordenes", x => x.Id);
+                    table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Ordenes_Clientes_ClienteId",
-                        column: x => x.ClienteId,
-                        principalTable: "Clientes",
+                        name: "FK_Orders_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "DetalleOrdenes",
+                name: "OrderDetails",
                 columns: table => new
                 {
-                    OrdenId = table.Column<int>(type: "int", nullable: false),
-                    ProductoId = table.Column<int>(type: "int", nullable: false),
-                    PrecioUnitario = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Cantidad = table.Column<int>(type: "int", nullable: false)
+                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DetalleOrdenes", x => new { x.OrdenId, x.ProductoId });
+                    table.PrimaryKey("PK_OrderDetails", x => new { x.OrderId, x.ProductId });
                     table.ForeignKey(
-                        name: "FK_DetalleOrdenes_Ordenes_OrdenId",
-                        column: x => x.OrdenId,
-                        principalTable: "Ordenes",
+                        name: "FK_OrderDetails_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_DetalleOrdenes_Productos_ProductoId",
-                        column: x => x.ProductoId,
-                        principalTable: "Productos",
+                        name: "FK_OrderDetails_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
-                table: "Clientes",
+                table: "Customers",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
@@ -95,7 +95,7 @@ namespace CleanArchitecture.Repositories.EFCore.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Productos",
+                table: "Products",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
@@ -105,29 +105,29 @@ namespace CleanArchitecture.Repositories.EFCore.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_DetalleOrdenes_ProductoId",
-                table: "DetalleOrdenes",
-                column: "ProductoId");
+                name: "IX_OrderDetails_ProductId",
+                table: "OrderDetails",
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Ordenes_ClienteId",
-                table: "Ordenes",
-                column: "ClienteId");
+                name: "IX_Orders_CustomerId",
+                table: "Orders",
+                column: "CustomerId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "DetalleOrdenes");
+                name: "OrderDetails");
 
             migrationBuilder.DropTable(
-                name: "Ordenes");
+                name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "Productos");
+                name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Clientes");
+                name: "Customers");
         }
     }
 }

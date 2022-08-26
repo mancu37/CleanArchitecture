@@ -22,7 +22,7 @@ namespace CleanArchitecture.Repositories.EFCore.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("CleanArchitecture.Entities.Cliente", b =>
+            modelBuilder.Entity("CleanArchitecture.Entities.Customer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -39,7 +39,7 @@ namespace CleanArchitecture.Repositories.EFCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Clientes");
+                    b.ToTable("Customers");
 
                     b.HasData(
                         new
@@ -54,28 +54,7 @@ namespace CleanArchitecture.Repositories.EFCore.Migrations
                         });
                 });
 
-            modelBuilder.Entity("CleanArchitecture.Entities.DetalleOrden", b =>
-                {
-                    b.Property<int>("OrdenId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductoId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Cantidad")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("PrecioUnitario")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("OrdenId", "ProductoId");
-
-                    b.HasIndex("ProductoId");
-
-                    b.ToTable("DetalleOrdenes");
-                });
-
-            modelBuilder.Entity("CleanArchitecture.Entities.Orden", b =>
+            modelBuilder.Entity("CleanArchitecture.Entities.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -83,40 +62,61 @@ namespace CleanArchitecture.Repositories.EFCore.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Ciudad")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("ClienteId")
-                        .HasMaxLength(5)
-                        .HasColumnType("int")
-                        .IsFixedLength();
-
-                    b.Property<string>("CodigoPostal")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Direccion")
+                    b.Property<string>("Address")
                         .IsRequired()
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
-                    b.Property<DateTime>("Fecha")
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CustomerId")
+                        .HasMaxLength(5)
+                        .HasColumnType("int")
+                        .IsFixedLength();
+
+                    b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Pais")
+                    b.Property<string>("PostalCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClienteId");
+                    b.HasIndex("CustomerId");
 
-                    b.ToTable("Ordenes");
+                    b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("CleanArchitecture.Entities.Producto", b =>
+            modelBuilder.Entity("CleanArchitecture.Entities.OrderDetail", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderDetails");
+                });
+
+            modelBuilder.Entity("CleanArchitecture.Entities.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -131,7 +131,7 @@ namespace CleanArchitecture.Repositories.EFCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Productos");
+                    b.ToTable("Products");
 
                     b.HasData(
                         new
@@ -151,30 +151,30 @@ namespace CleanArchitecture.Repositories.EFCore.Migrations
                         });
                 });
 
-            modelBuilder.Entity("CleanArchitecture.Entities.DetalleOrden", b =>
+            modelBuilder.Entity("CleanArchitecture.Entities.Order", b =>
                 {
-                    b.HasOne("CleanArchitecture.Entities.Orden", "Orden")
+                    b.HasOne("CleanArchitecture.Entities.Customer", null)
                         .WithMany()
-                        .HasForeignKey("OrdenId")
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("CleanArchitecture.Entities.Producto", null)
-                        .WithMany()
-                        .HasForeignKey("ProductoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Orden");
                 });
 
-            modelBuilder.Entity("CleanArchitecture.Entities.Orden", b =>
+            modelBuilder.Entity("CleanArchitecture.Entities.OrderDetail", b =>
                 {
-                    b.HasOne("CleanArchitecture.Entities.Cliente", null)
+                    b.HasOne("CleanArchitecture.Entities.Order", "Order")
                         .WithMany()
-                        .HasForeignKey("ClienteId")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("CleanArchitecture.Entities.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
                 });
 #pragma warning restore 612, 618
         }

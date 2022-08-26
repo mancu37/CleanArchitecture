@@ -4,14 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitecture.Entities
+namespace CleanArchitecture.UseCases.Dto.CreateOrden
 {
-    public class DetalleOrden
+    public class CreateOrderDetailsParams
     {
-        public int OrdenId { get; set; }
         public int ProductoId { get; set; }
         public decimal PrecioUnitario { get; set; }
         public int Cantidad { get; set; }
-        public Orden Orden { get; set; } = new Orden();
     }
 }

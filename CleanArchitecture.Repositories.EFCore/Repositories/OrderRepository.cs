@@ -10,21 +10,21 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Repositories.EFCore.Repositories
 {
-    public class OrdenRepository : IOrdenRepository
+    public class OrderRepository : IOrderRepository
     {
         readonly MyDbContext Context;
 
-        public OrdenRepository(MyDbContext context) => Context = context;
+        public OrderRepository(MyDbContext context) => Context = context;
 
-        public void Create(Orden orden)
+        public void Create(Order orden)
         {
             Context.Add(orden);
         }
 
-        public IEnumerable<Orden> GetOrdenesBySpecification(Specification<Orden> specification)
+        public IEnumerable<Order> GetOrdenesBySpecification(Specification<Order> specification)
         {
             var expressionDelegate = specification.Expression.Compile();
-            return Context.Ordenes.Where(expressionDelegate);
+            return Context.Orders.Where(expressionDelegate);
         }
     }
 }

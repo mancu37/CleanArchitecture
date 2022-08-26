@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Entities.Enums
 {
-    public enum TipoEnvio
+    public enum DiscountType
     {
-        Aire, Tierra, Mar, Riel
+        Flat, Percentage
     }
 }

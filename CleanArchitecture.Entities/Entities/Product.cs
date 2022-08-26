@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Entities
 {
-    public class Producto
+    public class Product
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;

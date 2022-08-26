@@ -14,10 +14,10 @@ namespace CleanArchitecture.Repositories.EFCore.Context
         {
         }
 
-        public DbSet<Producto> Productos { get; set; }
-        public DbSet<Cliente> Clientes { get; set; }
-        public DbSet<Orden> Ordenes { get; set; }
-        public DbSet<DetalleOrden> DetalleOrdenes { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
 
         /// <summary>
         /// Utilizamos Fluent API para configurar el modelo
@@ -25,61 +25,61 @@ namespace CleanArchitecture.Repositories.EFCore.Context
         /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Cliente>()
+            modelBuilder.Entity<Customer>()
                 .Property(c => c.Id)
                 .HasMaxLength(5)
                 .IsFixedLength();
 
-            modelBuilder.Entity<Cliente>()
+            modelBuilder.Entity<Customer>()
                 .Property(c => c.Name)
                 .IsRequired()
                 .HasMaxLength(40);
 
-            modelBuilder.Entity<Producto>()
+            modelBuilder.Entity<Product>()
                 .Property(c => c.Name)
                 .IsRequired()
                 .HasMaxLength(40);
 
-            modelBuilder.Entity<Orden>()
-                .Property(c => c.ClienteId)
+            modelBuilder.Entity<Order>()
+                .Property(c => c.CustomerId)
                 .IsRequired()
                 .HasMaxLength(5)
                 .IsFixedLength();
 
-            modelBuilder.Entity<Orden>()
-                .Property(c => c.Direccion)
+            modelBuilder.Entity<Order>()
+                .Property(c => c.Address)
                 .IsRequired()
                 .HasMaxLength(60);
 
-            modelBuilder.Entity<Orden>()
-                .Property(c => c.Ciudad)
+            modelBuilder.Entity<Order>()
+                .Property(c => c.City)
                 .IsRequired()
                 .HasMaxLength(50);
 
-            modelBuilder.Entity<DetalleOrden>()
-                .HasKey(c => new { c.OrdenId, c.ProductoId });
+            modelBuilder.Entity<OrderDetail>()
+                .HasKey(c => new { c.OrderId, c.ProductId });
 
-            modelBuilder.Entity<Orden>()
-                .HasOne<Cliente>()
+            modelBuilder.Entity<Order>()
+                .HasOne<Customer>()
                 .WithMany()
-                .HasForeignKey(c => c.ClienteId);
+                .HasForeignKey(c => c.CustomerId);
 
-            modelBuilder.Entity<DetalleOrden>()
-                .HasOne<Producto>()
+            modelBuilder.Entity<OrderDetail>()
+                .HasOne<Product>()
                 .WithMany()
-                .HasForeignKey(c => c.ProductoId);
+                .HasForeignKey(c => c.ProductId);
 
-            modelBuilder.Entity<Producto>()
+            modelBuilder.Entity<Product>()
                 .HasData(
-                    new Producto { Id = 1, Name = "Notebook" },
-                    new Producto { Id = 2, Name = "Teclado" },
-                    new Producto { Id = 3, Name = "Mouse" }
+                    new Product { Id = 1, Name = "Notebook" },
+                    new Product { Id = 2, Name = "Teclado" },
+                    new Product { Id = 3, Name = "Mouse" }
                 );
 
-            modelBuilder.Entity<Cliente>()
+            modelBuilder.Entity<Customer>()
                 .HasData(
-                new Cliente { Id = 1, Name = "Martin" },
-                new Cliente { Id = 2, Name = "Carolina" }
+                new Customer { Id = 1, Name = "Martin" },
+                new Customer { Id = 2, Name = "Carolina" }
                 );
 
 
