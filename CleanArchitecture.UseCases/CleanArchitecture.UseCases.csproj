@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CleanArchitecture.Entities\CleanArchitecture.Entities.csproj" />
     <ProjectReference Include="..\CleanArchitecture.UseCases.Dto\CleanArchitecture.UseCases.Dto.csproj" />
   </ItemGroup>
 

@@ -8,12 +8,12 @@ namespace CleanArchitecture.UseCases.Dto.CreateOrden
 {
     public class CreateOrderParams
     {
-        public int ClienteId { get; set; }
-        public string Direccion { get; set; } = string.Empty;
-        public string Ciudad { get; set; } = string.Empty;
-        public string Pais { get; set; } = string.Empty;
-        public string CodigoPostal { get; set; } = string.Empty;
-        public List<CreateOrderDetailsParams> DetalleOrden { get; set; } = new List<CreateOrderDetailsParams>();
+        public int CustomerId { get; set; }
+        public string Address { get; set; } = string.Empty;
+        public string City { get; set; } = string.Empty;
+        public string Country { get; set; } = string.Empty;
+        public string PostalCode { get; set; } = string.Empty;
+        public List<CreateOrderDetailsParams> OrderDetail { get; set; } = new List<CreateOrderDetailsParams>();
 
     }
 }
