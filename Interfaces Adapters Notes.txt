@@ -3,3 +3,15 @@ Aca van:
 	- Vistas (Presenters)
 	- View Models
 	- Gateways (Repositorios porque nos sirven como un enlace a los datos)
+
+
+Entity Framework Core
+	- Instalar Dependencias
+		- Microsoft.EntityFrameworkCore.Tools (para migrations)
+		- Microsoft.EntityFrameworkCore.SqlServer
+
+Comando para crear la migracion inicial:
+add-migration InitialCreate -p CleanArchitecture.Repositories.EFCore -c MyDbContext -o Migrations -s CleanArchitecture.Repositories.EFCore
+
+Comando para crear la base de datos:
+update-database InitialCreate -p CleanArchitecture.Repositories.EFCore -s CleanArchitecture.Repositories.EFCore
